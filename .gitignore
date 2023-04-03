@@ -26,3 +26,7 @@ coverage
 *.njsproj
 *.sln
 *.sw?
+
+### Composer template
+composer.lock
+/vendor/
