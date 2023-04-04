@@ -2,11 +2,11 @@
 
 namespace reunionou\actions;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use reunionou\services\ParticipantService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 
 final class UpdateParticipantStatusAction

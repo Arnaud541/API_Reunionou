@@ -5,7 +5,6 @@ namespace reunionou\actions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use reunionou\services\UserService;
-use Slim\Psr7\Response;
 
 final class RegisterUserAction
 {

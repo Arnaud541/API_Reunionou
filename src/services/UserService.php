@@ -5,14 +5,15 @@ namespace reunionou\services;
 
 use reunionou\models\User;
 
-class UserService {
+class UserService
+{
 
     public static function getUserById(int $id): ?array
     {
-        $user = User::select('id', 'firstname', 'lastname','email', 'created_at')
-                    ->where('id', '=', $id)
-                    ->first();
-    
+        $user = User::select('id', 'firstname', 'lastname', 'email', 'created_at')
+            ->where('id', '=', $id)
+            ->first();
+
         return $user ? $user->toArray() : null;
     }
 
@@ -33,19 +34,19 @@ class UserService {
     }
 
     public static function loginUser(string $email, string $password): ?array
-        {
-            $user = User::where('email', '=', $email)->first();
+    {
+        $user = User::where('email', '=', $email)->first();
 
-            if ($user === null) {
-                return null;
-            }
-
-            $isPasswordCorrect = password_verify($password, $user->password);
-
-            if ($isPasswordCorrect) {
-                return $user->toArray();
-            } else {
-                return null;
-            }
+        if ($user === null) {
+            return null;
         }
+
+        $isPasswordCorrect = password_verify($password, $user->password);
+
+        if ($isPasswordCorrect) {
+            return $user->toArray();
+        } else {
+            return null;
+        }
+    }
 }

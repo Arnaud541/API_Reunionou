@@ -2,11 +2,11 @@
 
 namespace reunionou\actions;
 
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 use reunionou\services\ParticipantService;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
 
 
 final class inviteParticipantAction
@@ -45,7 +45,7 @@ final class inviteParticipantAction
         }
 
         $comment = ParticipantService::inviteParticipant($event_id, $user_id, $firstname, $lastname, $email, 'pending');
-        
+
         $response = $response->withHeader('Content-Type', 'application/json');
         $response->getBody()->write(json_encode($comment));
 
