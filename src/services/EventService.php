@@ -67,15 +67,15 @@ class EventService {
         return $events ? $events->toArray() : null;
     }
 
-    public static function createEvent(array $eventData): array
+    public static function createEvent(string $title, string $description, string $street, string $zipcode, string $city, int $organize_id): array
     {
             $event = new Event();
-            $event->title = $eventData['title'];
-            $event->description = $eventData['description'];
-            $event->street = $eventData['street'];
-            $event->zipcode = $eventData['zipcode'];
-            $event->city = $eventData['city'];
-            $event->organizer_id = $eventData['organizer_id'];
+            $event->title = $title;
+            $event->description = $description;
+            $event->street = $street;
+            $event->zipcode = $zipcode;
+            $event->city = $city;
+            $event->organizer_id = $organize_id;
             $event->save();
     
             return $event->toArray();
