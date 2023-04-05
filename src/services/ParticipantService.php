@@ -21,16 +21,16 @@ class ParticipantService
     {
 
         if (empty($event_id) || empty($user_id)) {
-            return null;
+            return ['error' => 'Missing required fields'];
         }
 
         $existingParticipant = Participant::where('email', '=', $email)->first();
         if ($existingParticipant !== null)
-            return null;
+            return ['error' => 'User was already invited'];
 
         $participant = new Participant;
         $participant->event_id = $event_id;
-        $participant->user_id = $user_id;
+        $participant->participant_id = $user_id;
         $participant->firstname = $firstname;
         $participant->lastname = $lastname;
         $participant->email = $email;
@@ -57,6 +57,4 @@ class ParticipantService
             return ['error' => 'Failed to update participant status'];
         }
     }
-
-
 }
