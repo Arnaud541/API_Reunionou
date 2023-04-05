@@ -49,4 +49,13 @@ class UserService
             return null;
         }
     }
+
+    public static function getUserByEmail(string $email): ?array
+    {
+        $user = User::select('id', 'firstname', 'lastname', 'email', 'created_at')
+            ->where('email', '=', $email)
+            ->first();
+
+        return $user ? $user->toArray() : null;
+    }
 }
