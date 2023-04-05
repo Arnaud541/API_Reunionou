@@ -18,7 +18,7 @@ final class CreateEventAction
         try {
             $decoded = JWT::decode($token, new Key('63DDF4E66BEC66FAA5B66D87989B6', 'HS256'));
             $user_id = $decoded->user_id;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $response->withStatus(401)->withHeader('Content-Type', 'application/json');
             $response->getBody()->write(json_encode(['error' => 'Unauthorized']));
             return $response;
@@ -26,7 +26,7 @@ final class CreateEventAction
 
         $requestData = $request->getParsedBody();
 
-        if (!isset($requestData['title'], $requestData['street'], $requestData['zipcode'], $requestData['city'], $requestData['date'])) {
+        if (!isset($requestData['title'], $requestData['description'], $requestData['date'])) {
             $response->withStatus(400)->withHeader('Content-Type', 'application/json');
             $response->getBody()->write(json_encode([
                 'error' => 'Missing required fields'
@@ -36,14 +36,16 @@ final class CreateEventAction
 
         $organizer_id = $user_id;
         $title = $requestData['title'];
-        $description = $requestData['description'] ?? null;
-        $street = $requestData['street'];
-        $zipcode = $requestData['zipcode'];
-        $city = $requestData['city'];
+        $description = $requestData['description'];
+        $longitude = $requestData['longitude'] ?? null;
+        $latitude= $requestData['latitude'] ?? null;
+        $street = $requestData['street'] ?? null;
+        $zipcode = $requestData['zipcode'] ?? null;
+        $city = $requestData['city'] ?? null;
         $date = $requestData['date'];
 
 
-        $event = EventService::createEvent($title, $description, $street, $zipcode, $city, $organizer_id, $date);
+        $event = EventService::createEvent($title, $description,  $street, $zipcode, $city, $organizer_id, $date, $longitude, $latitude);
 
         $data = [
             'id' => 'resource',

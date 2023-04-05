@@ -3,6 +3,8 @@
 
 namespace reunionou\services;
 
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use reunionou\models\Event;
 
 class EventService
@@ -15,6 +17,18 @@ class EventService
             ->first();
 
         return $event ? $event->toArray() : null;
+    }
+
+    public static function getCurrentEvents(int $userId): ?array
+    {
+        $events = Event::select('id', 'title', 'description', 'latitude', 'longitude', 'street', 'zipcode', 'city', 'organizer_id', 'created_at', 'date')
+            ->where('date', '>', Date::now())
+            ->whereHas('users', function ($query) use ($userId) {
+                $query->where('id', $userId);
+            })
+            ->first();
+
+        return $events ? $events->toArray() : null;
     }
 
     public static function getAllEvents(): ?array
@@ -68,11 +82,13 @@ class EventService
         return $events ? $events->toArray() : null;
     }
 
-    public static function createEvent(string $title, string $description, string $street, string $zipcode, string $city, int $organize_id, string $date): array
+    public static function createEvent(string $title, string $description, int $organize_id, string $date, float $longitude = null, float $latitude = null, string $street = null, string $zipcode = null, string $city = null): array
     {
         $event = new Event();
         $event->title = $title;
         $event->description = $description;
+        $event->longitude = $longitude;
+        $event->latitude = $latitude;
         $event->street = $street;
         $event->zipcode = $zipcode;
         $event->city = $city;

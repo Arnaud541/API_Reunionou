@@ -17,6 +17,7 @@ use reunionou\actions\InviteParticipantAction;
 use reunionou\actions\LoginUserAction;
 use reunionou\actions\RegisterUserAction;
 use reunionou\actions\UpdateParticipantStatusAction;
+use reunionou\actions\GetEventCurrentEventsAction;
 use Slim\Exception\NotFoundException;
 use Slim\Factory\AppFactory;
 
@@ -40,28 +41,6 @@ $db->bootEloquent();
 $app = AppFactory::create();
 
 
-// $app->add(function ($request, $handler) {
-//     $response = $handler->handle($request);
-
-//     if ($request->getMethod() === "OPTIONS") {
-//         $response = $response
-//         ->withHeader("Access-Control-Allow-Origin: *")
-//         ->withHeader("Access-Control-Allow-Methods: *")
-//         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-//         ->withHeader('Access-Control-Max-Age', 3600)
-//         ->withHeader('Access-Control-Allow-Credentials', 'true');
-//     } else {
-//         $response = $response
-//         ->withHeader('Access-Control-Allow-Origin', "*")
-//         ->withHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS')
-//         ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-//         ->withHeader('Access-Control-Max-Age', 3600)
-//         ->withHeader('Access-Control-Allow-Credentials', 'true');
-//     }
-
-//     return $response;
-// });
-
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
@@ -75,6 +54,7 @@ $app->post('/login', LoginUserAction::class);
 $app->get('/user/{id}', GetUserAction::class);
 $app->post('/event', CreateEventAction::class);
 $app->get('/event/{id}', GetEventAction::class);
+$app->get('/user/{id}/currentEvents',GetEventCurrentEventsAction::class);
 $app->get('/events', GetEventsAction::class);
 $app->delete('/event/{id}', DeleteEventAction::class);
 $app->post('/event/{id}/invite', InviteParticipantAction::class);
