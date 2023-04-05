@@ -38,14 +38,14 @@ final class CreateEventAction
         $title = $requestData['title'];
         $description = $requestData['description'];
         $longitude = $requestData['longitude'] ?? null;
-        $latitude= $requestData['latitude'] ?? null;
+        $latitude = $requestData['latitude'] ?? null;
         $street = $requestData['street'] ?? null;
         $zipcode = $requestData['zipcode'] ?? null;
         $city = $requestData['city'] ?? null;
         $date = $requestData['date'];
 
 
-        $event = EventService::createEvent($title, $description,  $street, $zipcode, $city, $organizer_id, $date, $longitude, $latitude);
+        $event = EventService::createEvent($title, $description, $organizer_id, $date, $longitude, $latitude, $street, $zipcode, $city);
 
         $data = [
             'id' => 'resource',
